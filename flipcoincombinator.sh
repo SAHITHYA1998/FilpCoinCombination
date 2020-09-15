@@ -1,39 +1,75 @@
-
-
 #! /bin/bash 
 echo "Welcome to Flip coin combination"
-
-declare -A headTail
-
 times=0
+declare -A headTail1
 
 while [ $times -lt 100 ]
 do
-randomNum=$(( RANDOM % 2  ))
+randomNum1=$(( RANDOM % 2  ))
+randomNum2=$(( RANDOM % 2  ))
 
-
-if [ $randomNum -eq 1 ]
+if [ $randomNum1 -eq 0 -a $randomNum2 -eq 0 ]
 then
-        val=${headTail["Head"]}
+
+        val=${headTail1["TT"]}
         val=$(($val+1))
 
-        headTail["Head"]=$val
-else
-        val=${headTail["Tail"]}
+        headTail1["TT"]=$val
+elif [ $randomNum1 -eq 0 -a $randomNum2 -eq 1 ]
+then
+        val=${headTail1["TH"]}
         val=$(($val+1))
 
-        headTail["Tail"]=$val
+        headTail1["TH"]=$val
+elif [ $randomNum1 -eq 1 -a $randomNum2 -eq 0 ]
+then
+
+        val=${headTail1["HT"]}
+        val=$(($val+1))
+
+        headTail1["HT"]=$val
+elif [ $randomNum1 -eq 1 -a $randomNum2 -eq 1 ]
+then
+        val=${headTail1["HH"]}
+        val=$(($val+1))
+
+        headTail1["HH"]=$val
 
 fi
- times=$(($times+1))
+   times=$(($times+1))
 done
 
-headC=${headTail["Head"]}
-tailC=${headTail["Tail"]}
+hhC=0
+hhC=${headTail1["HH"]}
 
-headPer=$((100*$headC/$times))
+ttC=0
+ttC=${headTail1["TT"]}
 
-tailPer=$((100*$tailC/$times))
+htC=0
+htC=${headTail1["HT"]}
 
-echo "Head % is : $headPer"
-echo "Tail % is : $tailPer"
+thC=0
+thC=${headTail1["TH"]}
+
+if [ $hhC -gt 0 ]
+then
+        HHper=$((100*$hhC/$times))
+fi
+if [ $htC -gt 0 ]
+then
+        HTper=$((100*$htC/$times))
+fi
+if [ $thC -gt 0 ]
+then
+        THper=$((100*$thC/$times))
+fi
+if [ $ttC -gt 0 ]
+then
+        TTper=$((100*$ttC/$times))
+fi
+
+echo "HH % : $HHper"
+echo "HT % : $HTper"
+echo "TH % : $THper"
+echo "TT % : $TTper"
+
